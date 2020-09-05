@@ -37,11 +37,15 @@ The sharing clients to target are :
 
 - Zoom for reliable, large video calls
 - Microsoft Teams
-- Google Meet for G Suite users
+- Google Meet for G Suite users :
 - GoToMeeting for professional features
 - join.me for a lightweight option
 - Webex for whiteboarding
 - Slack for calls from your team chat app
+
+<!-- I am not sure , why any one would pay for it -->
+
+No updates withe possibility of detecting screen share yet. Why it is so difficult
 
 Revenue Model need to be decided :
 ................................
