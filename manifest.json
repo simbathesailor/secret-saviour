@@ -1,14 +1,14 @@
 {
-  "name": "TABTAB",
-  "description": "A 360 degree manager for your tabs",
+  "name": "Tab Securer",
+  "description": "An extension to secure your private tabs.",
   "version": "1.0",
   "page_action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "images/get_started16.png",
-      "32": "images/get_started32.png",
-      "48": "images/get_started48.png",
-      "128": "images/get_started128.png"
+      "16": "images/favicon-16x16.png",
+      "32": "images/favicon-32x32.png",
+      "48": "images/android-icon-48x48.png",
+      "144": "images/android-icon-144x144.png"
     }
   },
   "manifest_version": 2,
@@ -34,10 +34,10 @@
     "notifications"
   ],
   "icons": {
-    "16": "images/get_started16.png",
-    "32": "images/get_started32.png",
-    "48": "images/get_started48.png",
-    "128": "images/get_started128.png"
+    "16": "images/favicon-16x16.png",
+    "32": "images/favicon-32x32.png",
+    "48": "images/android-icon-48x48.png",
+    "144": "images/android-icon-144x144.png"
   },
 
   "content_security_policy": "object-src 'self'; child-src 'self'; default-src 'self';",
@@ -45,7 +45,7 @@
   "devtools_page": "devtools/devtools.html",
   "content_scripts": [
     {
-      "matches": ["https://developer.chrome.com/*"],
+      "matches": ["<all_urls>"],
       "js": ["contentScripts/main.js"]
     }
   ],
