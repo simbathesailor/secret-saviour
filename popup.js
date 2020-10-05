@@ -242,8 +242,13 @@ function onClickMarkAsPrivate(e) {
       ) {
         // yourTextArea.value = data.mytext;
         newData = [...data.listOfPrivateTabs, incomingUrl];
-      } else {
+      } else if (!data.listOfPrivateTabs) {
         newData = [incomingUrl];
+      } else if (
+        data.listOfPrivateTabs &&
+        isAlreadyThere(incomingUrl, data.listOfPrivateTabs || [])
+      ) {
+        newData = data.listOfPrivateTabs.filter((elem) => elem !== incomingUrl);
       }
       chrome.storage.sync.set({
         listOfPrivateTabs: newData,
