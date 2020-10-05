@@ -50,3 +50,13 @@ No updates withe possibility of detecting screen share yet. Why it is so difficu
 Revenue Model need to be decided :
 ................................
 But the feature which are free should be good enough to pull the customers for premium verion of secret-saviour
+
+---
+
+Work started
+Need to get correct icon and with the below following diomension to properly show
+up in browser
+
+"icons": { "16": "icon16.png",
+"48": "icon48.png",
+"128": "icon128.png" },

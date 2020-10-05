@@ -43,12 +43,25 @@ button {
 .popup-body-list li p {
   font-size: 1rem;
 }
+.popup-body-list li p:hover {
+  text-decoration: underline;
+}
 
 .popup-body-list li {
   border-bottom: 1px solid #de7474;
   padding-left: 10px;
   cursor: pointer;
+  padding-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .popup-body-list li:last-child {
   border-bottom: 0px;
 }
+/* 
+#mark-as-private {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+} */

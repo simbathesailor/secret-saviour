@@ -14,17 +14,17 @@ Notification.requestPermission(function (status) {
 });
 // checking when time will happen
 
-const timeoutId = window.setTimeout(() => {
-  // chrome.tabs.getCurrent(function ()) doesnot work
+// const timeoutId = window.setTimeout(() => {
+//   // chrome.tabs.getCurrent(function ()) doesnot work
 
-  chrome.runtime.sendMessage(
-    chrome.runtime.id,
-    { type: "trigger_redirection_tosuspended_page" },
-    function (response) {
-      console.log("trigger sent to extension");
-    }
-  );
-}, limit);
+//   chrome.runtime.sendMessage(
+//     chrome.runtime.id,
+//     { type: "trigger_redirection_tosuspended_page" },
+//     function (response) {
+//       console.log("trigger sent to extension");
+//     }
+//   );
+// }, limit);
 
 var searchParams = new URLSearchParams(location.search);
 
