@@ -150,7 +150,9 @@ function renderUI() {
       // console.log("is there already");
       popupBodyList.innerHTML = `
         <li>
-            <p id="mark-as-private">Mark As Private</p>
+            <p id="mark-as-private">${
+              isAlreadyThereInfo ? "Remove from Private" : "Mark As Private"
+            }</p>
             ${isAlreadyThereInfo ? `<span>DONE</span>` : ``}
         </li>
         <li>
