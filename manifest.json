@@ -8,7 +8,7 @@
       "16": "images/favicon-16x16.png",
       "32": "images/favicon-32x32.png",
       "48": "images/android-icon-48x48.png",
-      "144": "images/android-icon-144x144.png"
+      "128": "images/apple-touch-icon-120x120.png"
     }
   },
   "manifest_version": 2,
@@ -37,15 +37,16 @@
     "16": "images/favicon-16x16.png",
     "32": "images/favicon-32x32.png",
     "48": "images/android-icon-48x48.png",
-    "144": "images/android-icon-144x144.png"
+    "128": "images/apple-touch-icon-120x120.png"
   },
 
-  "content_security_policy": "object-src 'self'; child-src 'self'; default-src 'self';",
+  "content_security_policy": "object-src 'self'; child-src 'self'; default-src 'self' https://media.giphy.com/media/wpoLqr5FT1sY0/giphy.gif;",
   "options_page": "options.html",
   "devtools_page": "devtools/devtools.html",
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
+      "exclude_globs": ["chrome-extension://*"],
       "js": ["contentScripts/main.js"]
     }
   ],

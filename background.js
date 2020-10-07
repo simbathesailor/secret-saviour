@@ -63,16 +63,20 @@ chrome.runtime.onInstalled.addListener(function () {
           { title: "Item3", message: "This is item 3." },
         ],
       };
-      chrome.notifications.create(`${Math.random()}`, opt, function callback() {
-        console.log("created!");
-        console.log("Last error:", chrome.runtime.lastError);
-      });
+      // chrome.notifications.create(`${Math.random()}`, opt, function callback() {
+      //   console.log("created!");
+      //   console.log("Last error:", chrome.runtime.lastError);
+      // });
     }
     if (message == "reload") {
       chrome.tabs.executeScript({
         code: 'document.body.style.backgroundColor="orange"',
       });
     }
+  });
+
+  chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    console.log("tabId, changeInfo,tab", tabId, changeInfo, tab);
   });
 
   // chrome.runtime.onInstalled.addListener(function () {
@@ -83,18 +87,18 @@ chrome.runtime.onInstalled.addListener(function () {
   //   });
   // });
 
-  chrome.contextMenus.create({
-    id: "sampleContextMenu",
-    title: "Sample Context Menu",
-    contexts: ["selection"], // only show context menu on selection
-  });
+  // chrome.contextMenus.create({
+  //   id: "sampleContextMenu",
+  //   title: "Sample Context Menu",
+  //   contexts: ["selection"], // only show context menu on selection
+  // });
 
-  // You can have more options to add the context menus. check the documentation  for
-  // chrome.contextMenus
+  // // You can have more options to add the context menus. check the documentation  for
+  // // chrome.contextMenus
 
-  chrome.contextMenus.onClicked.addListener(() => {
-    console.log("context menu clicked");
-  });
+  // chrome.contextMenus.onClicked.addListener(() => {
+  //   console.log("context menu clicked");
+  // });
 
   // This will run when a bookmark is created. need permission
   // chrome.bookmarks.onCreated.addListener(function () {

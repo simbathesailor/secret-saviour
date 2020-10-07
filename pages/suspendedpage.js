@@ -2,6 +2,25 @@ console.log("some value");
 
 // let limit =
 document.addEventListener("DOMContentLoaded", function () {
+  let darkMode = false;
+  if (
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  ) {
+    // dark mode
+    console.log("dark mode is on");
+    darkMode = true;
+  }
+  // window
+  //   .matchMedia("(prefers-color-scheme: dark)")
+  //   .addEventListener("change", (e) => {
+  //     const newColorScheme = e.matches ? "dark" : "light";
+  //     console.log("newColorScheme", newColorScheme);
+  //   });
+
+  // if (darkMode) {
+  //   document.body.style.backgroundColor = "#000";
+  // }
   console.log("some value in suspended page");
 
   const startTimeWHenStartedSHowingThePage = new Date();
@@ -21,11 +40,18 @@ document.addEventListener("DOMContentLoaded", function () {
     searchParamObj[p[0]] = p[1];
   }
 
-  document.getElementById("click-me").onclick = function () {
-    // this is rsponsibel for reloading to old page//
-    // Basically how great suspender works
+  function onClickURL() {
     window.location.href = searchParamObj.url;
-  };
+  }
+  document.getElementById("click-me").onclick = onClickURL;
+
+  const titleElem = document.querySelectorAll(".title")[0];
+  const pageURLElem = document.querySelectorAll(".page-url")[0];
+
+  pageURLElem.onclick = onClickURL;
+  titleElem.innerHTML = searchParamObj.title || "Tab Securer";
+  pageURLElem.innerHTML =
+    searchParamObj.url || "Looks like we dont have anywhere to go";
 });
 
 // if it is a CONTWENT SCRIPT, then it can message from background.js
