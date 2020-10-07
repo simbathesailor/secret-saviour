@@ -1,0 +1,44 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 16px;
+}
+
+.options-sub-container {
+  width: 50%;
+  min-width: 670px;
+  min-height: 100vh;
+  margin: 0px auto;
+
+  padding-top: 32px;
+  padding-left: 28px;
+  padding-right: 28px;
+  padding-bottom: 32px;
+}
+
+.section-title {
+  font-size: 0.75rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    color: #fff;
+    background-color: #212224;
+  }
+  .options-sub-container {
+    background-color: #292a2d;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    color: #000;
+    background-color: #f8f9fa;
+  }
+
+  .options-sub-container {
+    background-color: #ffffff;
+  }
+}

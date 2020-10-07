@@ -1,6 +1,10 @@
 * {
   box-sizing: border-box;
   --main-text-color: #696666ee;
+  --golden-road: #daa520;
+  --light-coral: #f08080;
+  --salmon: #fa8072;
+  letter-spacing: 0.1em;
 }
 :root {
   font-size: 16px;
@@ -24,13 +28,13 @@ button {
   justify-content: center;
   background: #d9d1d159;
   box-shadow: 0 55px 110px -2rem hsla(0, 2%, 37%, 0.9);
-  border-bottom: 1px solid #e27272;
+  border-bottom: 1px solid var(--salmon);
 }
 .popup-header p {
   font-size: 1.2rem;
   text-align: center;
   margin: 0px;
-  color: #d67f7f;
+  color: var(--light-coral);
   font-weight: bold;
 }
 
@@ -95,6 +99,51 @@ button {
   color: #1aa71a;
   font-weight: bold;
   font-size: 16px;
+}
+
+#private-tag {
+  position: absolute;
+  right: 10px;
+
+  font-weight: bold;
+  font-size: 1rem;
+  border: 1px solid;
+  border-radius: 50%;
+  height: 24px;
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0;
+}
+@media (prefers-color-scheme: dark) {
+  body {
+    color: #fff;
+    background-color: #292a2d;
+  }
+  .popup-header {
+    background: var(--golden-road);
+  }
+
+  .popup-header p {
+    color: #fff;
+  }
+  .popup-body-list li p {
+    color: #fff;
+  }
+  #private-tag {
+    color: #fff;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    color: #000;
+    background-color: rgb(255, 255, 255);
+  }
+  #private-tag {
+    color: var(--light-coral);
+  }
 }
 /* 
 #mark-as-private {
