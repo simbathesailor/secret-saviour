@@ -463,6 +463,7 @@ function onClickMarkAsPrivate(e) {
       updateSecuredTabsCount();
       updatePrivateButNotSecuredCount();
       updateThePrivateTag();
+
       // renderUI();
     });
   });
@@ -558,6 +559,7 @@ function onClickHideAllPrivate() {
                 // });
                 updateSecuredTabsCount();
                 updatePrivateButNotSecuredCount();
+                updateSecuredTabsCount();
               }
             }
           );
@@ -582,7 +584,7 @@ function onClickBringBackPrivate() {
     console.log("onClickBringBackPrivate -> tabs", tabs);
     countOfPrivateTabsHidden = tabs.length || 0;
     renderUI();
-    tabs.forEach((tabInfo) => {
+    tabs.forEach((tabInfo, index) => {
       const { url, id } = tabInfo;
       const urlObj = new URL(url);
       const search = urlObj.search;
@@ -596,10 +598,20 @@ function onClickBringBackPrivate() {
 
       const { url: urlToUpdate, title: titleToUpdate } = searchParamObj;
 
-      chrome.tabs.update(id, {
-        url: urlToUpdate,
-        // title: titleToUpdate,
-      });
+      chrome.tabs.update(
+        id,
+        {
+          url: urlToUpdate,
+          // title: titleToUpdate,
+        },
+        () => {
+          if (index === tabs.length - 1) {
+            updateSecuredTabsCount();
+            updatePrivateButNotSecuredCount();
+            updateSecuredTabsCount();
+          }
+        }
+      );
     });
   });
 }

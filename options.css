@@ -1,15 +1,28 @@
 * {
   box-sizing: border-box;
+  /* --main-box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14),
+    0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.4); */
+  --main-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 
+#private-tabs {
+  box-shadow: var(--main-box-shadow);
+  border-radius: 5px;
+}
 body {
   font-size: 16px;
 }
 
+svg:root {
+  width: 100%;
+  height: 100%;
+}
+
 .options-sub-container {
   width: 50%;
-  min-width: 670px;
-  min-height: 100vh;
+  max-width: 600px;
+  /* min-height: 100vh; */
   margin: 0px auto;
 
   padding-top: 32px;
@@ -19,15 +32,75 @@ body {
 }
 
 .section-title {
-  font-size: 0.75rem;
+  font-size: 0.875rem;
+  margin-bottom: 20px;
 }
 
+.option-row {
+  height: 48px;
+  /* display: flex; */
+  align-items: center;
+  /* justify-content: space-between; */
+  border-bottom: 1px solid rgb(255 255 255 / 44%);
+  /* border-top: 1px solid rgb(255 255 255 / 44%); */
+  font-size: 0.8125rem;
+  display: grid;
+  grid-template-columns: 60% 20% 20%;
+}
+.option-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 48px;
+
+  /* border-bottom: 1px solid rgb(255 255 255 / 44%);
+  border-top: 1px solid rgb(255 255 255 / 44%); */
+  font-size: 0.8125rem;
+}
+
+.options-list {
+  padding: 0px;
+}
+.option-row {
+  padding: 0px 25px;
+}
+
+.options-list .option-row:last-child {
+  border-bottom-width: 0px;
+}
+.options-list .option-row:first-child {
+  border-top-width: 0px;
+}
+
+.option-header {
+  padding: 0px 25px;
+}
+.arrow-icon {
+  height: 12px;
+}
+
+.right {
+  transform: rotate(180deg);
+}
+
+.bottom {
+  transform: rotate(270deg);
+}
+
+.top {
+  transform: rotate(90deg);
+}
+
+.left {
+  transform: rotate(0deg);
+}
 @media (prefers-color-scheme: dark) {
   body {
     color: #fff;
     background-color: #212224;
   }
-  .options-sub-container {
+  #private-tabs {
     background-color: #292a2d;
   }
 }
@@ -38,7 +111,7 @@ body {
     background-color: #f8f9fa;
   }
 
-  .options-sub-container {
+  #private-tabs {
     background-color: #ffffff;
   }
 }
