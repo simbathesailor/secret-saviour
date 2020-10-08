@@ -95,6 +95,9 @@ function isAlreadyThere(obj, existingData) {
         entireDomain: domainFromEach,
       } = elem;
 
+      if (!urlFromEach || !url) {
+        return false;
+      }
       // if(exactFromEach) {
       const isExactMatch = urlFromEach === url && exactFromEach;
 
@@ -105,7 +108,8 @@ function isAlreadyThere(obj, existingData) {
         parseEachUrl.origin === parseIncomingUrl.origin && domainFromEach;
 
       if (isExactMatch) {
-        (isExactMatchOuter = true), (exactMatchIndex = index);
+        isExactMatchOuter = true;
+        exactMatchIndex = index;
       }
 
       if (isDomainMatch) {
