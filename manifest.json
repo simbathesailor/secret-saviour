@@ -40,7 +40,7 @@
     "128": "images/apple-touch-icon-120x120.png"
   },
 
-  "content_security_policy": "object-src 'self'; child-src 'self'; default-src 'self' https://media.giphy.com; style-src 'self' 'unsafe-inline';",
+  "content_security_policy": "object-src 'self'; child-src 'self'; default-src 'self' https://media.giphy.com; style-src 'self' 'unsafe-inline';img-src * data:;",
   "options_page": "options.html",
   "devtools_page": "devtools/devtools.html",
   "content_scripts": [

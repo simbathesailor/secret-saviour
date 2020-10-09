@@ -416,6 +416,7 @@ function onClickMarkAsPrivate(e) {
         url: type === "domain" ? parsedIncomingUrl.origin : incomingUrl,
         exact: type === "exact",
         entireDomain: type === "domain",
+        favIconUrl: tabs[0].favIconUrl,
       };
 
       // isUrlThere,
