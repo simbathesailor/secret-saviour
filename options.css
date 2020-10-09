@@ -5,16 +5,21 @@
   --main-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
     0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 
+  --cta-box-shadow: 0 50px 100px -20px rgba(50, 50, 93, 0.25),
+    0 30px 60px -30px rgba(0, 0, 0, 0.3),
+    inset 0 -2px 6px 0 rgba(10, 37, 64, 0.35);
   --main-text-color: #696666ee;
   --golden-road: #daa520;
   --light-coral: #f08080;
   --salmon: #fa8072;
+  letter-spacing: 0.05rem;
 }
 
 .page-heading {
   font-size: 2rem;
   color: var(--light-coral);
   letter-spacing: 0.1rem;
+  font-weight: bold;
 }
 
 a {
@@ -27,6 +32,7 @@ a:hover {
 #private-tabs {
   box-shadow: var(--main-box-shadow);
   border-radius: 5px;
+  padding: 15px 10px;
 }
 body {
   font-size: 16px;
@@ -80,6 +86,10 @@ svg:root {
   /* border-bottom: 1px solid rgb(255 255 255 / 44%);
   border-top: 1px solid rgb(255 255 255 / 44%); */
   font-size: 0.8125rem;
+}
+.option-header p {
+  font-size: 1rem;
+  font-weight: bold;
 }
 
 .options-list {
@@ -145,6 +155,60 @@ svg:root {
   display: flex;
   align-items: center;
 }
+
+.add-url-layer {
+  display: grid;
+  grid-template-columns: 79% 20%;
+  padding: 0px 40px;
+  grid-column-gap: 40px;
+  justify-content: center;
+  height: 36px;
+}
+
+.add-url-radio-layer {
+  padding-left: 20px;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.add-url-radio-layer label {
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.add-url-radio-layer input {
+  margin-right: 10px;
+  height: 15px;
+  width: 15px;
+  cursor: pointer;
+}
+
+input#add-url-input {
+  font-size: 1rem;
+  padding-left: 10px;
+  background: #212224;
+  border: 0px;
+  color: #fff;
+  border-radius: 5px;
+}
+#add-new-btn {
+  /* background: #212224;
+  color: #fff; */
+  border: none;
+  box-shadow: var(--cta-box-shadow);
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.cross-icon {
+  cursor: pointer;
+}
+
+#add-new-btn:hover {
+  transform: scale(1.02);
+}
 @media (prefers-color-scheme: dark) {
   body {
     color: #fff;
@@ -166,6 +230,19 @@ svg:root {
   }
   #search-url {
     background: #fff;
+    color: #000;
+    border: 1px solid #000;
+  }
+  a {
+    color: #000;
+  }
+  #add-new-btn {
+    background: #f08080;
+    color: #fff;
+  }
+
+  input#add-url-input {
+    background: #eee;
     color: #000;
   }
 }

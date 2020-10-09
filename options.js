@@ -15,6 +15,8 @@ const kButtonColors = ["#3aa757", "#e8453c", "#f9bb2d", "#4688f1"];
 // }
 // constructOptions(kButtonColors);
 
+// let emailRegex = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi;
+
 document.addEventListener("DOMContentLoaded", function () {
   let dataPrivateUrls = [];
   let dataAfterSearchApplied = [];
@@ -27,24 +29,10 @@ document.addEventListener("DOMContentLoaded", function () {
   `;
   }
 
-  function getCrossIcon() {
+  function arrowIcon() {
     return `
-    <svg 
-    class="cross-icon"
-    xmlns="http://www.w3.org/2000/svg" fill="var(--salmon)" width="20" height="24" viewBox="0 0 24 24"><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/></svg>
-    `;
-  }
-
-  function getHtmlFromTemplate() {
-    return `
-  <div class="options-sub-container">
-  <p class="page-heading">Tab Securer</p>
-  <div class="section-title">Manage Preferences</div>
-  <div id="private-tabs">
-    <div class="option-header">
-      <p>All Private Tabs</p>
-
-      <svg
+    
+    <svg
         class="arrow-icon right"
         xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -80,29 +68,72 @@ document.addEventListener("DOMContentLoaded", function () {
         <g></g>
         <g></g>
       </svg>
+    `;
+  }
+
+  function getCrossIcon() {
+    return `
+    <svg 
+    class="cross-icon"
+    xmlns="http://www.w3.org/2000/svg" fill="var(--salmon)" width="20" height="24" viewBox="0 0 24 24"><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/></svg>
+    `;
+  }
+
+  function getKeys(elem) {
+    return `${elem.url}-${elem.entireDomain}-${elem.exact}`;
+  }
+
+  function getHtmlFromTemplate() {
+    return `
+    <div class="options-sub-container">
+    <p class="page-heading">Tab Securer</p>
+    <div class="section-title">Manage Preferences</div>
+  <div id="private-tabs">
+    <div class="option-header">
+      <p>All Private Tabs</p>
+
+      
+    </div>
+    <div class="add-url-layer-container">
+        <div class="add-url-layer">
+          <input type="text" id="add-url-input" placeholder="Add New URL"/> <button id="add-new-btn">Add New URL</button>
+        </div>
+        <div class="add-url-radio-layer">
+        <input type="radio" id="domain" name="type-url" value="domain"  checked="true">
+        <label for="domain">Domain</label>
+        <input type="radio" id="exact" name="type-url" value="exact">
+        <label for="exact">Exact</label>
+
+       
+        </div>
+       
     </div>
     <div class="option-detail-section">
       <ul class="options-list">
       <li class="option-row header">
-        <span>URL <span> <input id='search-url' value="${searchValueOutside}" type="text" /></span></span>
+        <span>URL <span> <input id='search-url' value="${searchValueOutside}" type="text" placeholder="Search" /></span></span>
+        <span>Domain</span>
         <span>
           Exact
         </span>
-        <span>Domain</span>
+       
         </li>
         <ul class="table-body">
         ${(() => {
-          return dataAfterSearchApplied.reduce((acc, elem) => {
+          return dataAfterSearchApplied.reduce((acc, elem, index) => {
             const { url, exact, entireDomain } = elem;
             acc = `
             ${acc}
             <li class="option-row">
               <span><a href="${url}" target="__blank">${url}</a></span>
+              <span>  ${entireDomain ? getTickUI() : ""}</span>
               <span>
                ${exact ? getTickUI() : ``} 
               </span>
-              <span>  ${entireDomain ? getTickUI() : ""}</span>
-              <span class="cross-icon">${getCrossIcon()}</span>
+             
+              <span data-key="${getKeys(
+                elem
+              )}" class="cross-icon-svg-container">${getCrossIcon()}</span>
             </li>
             `;
             return acc;
@@ -125,11 +156,14 @@ document.addEventListener("DOMContentLoaded", function () {
         ${acc}
         <li class="option-row">
           <span><a href="${url}" target="__blank">${url}</a></span>
+          <span>  ${entireDomain ? getTickUI() : ""}</span>
           <span>
            ${exact ? getTickUI() : ``} 
           </span>
-          <span>  ${entireDomain ? getTickUI() : ""}</span>
-          <span class="cross-icon">${getCrossIcon()}</span>
+         
+          <span data-key="${getKeys(
+            elem
+          )}" class="cross-icon-svg-container">${getCrossIcon()}</span>
         </li>
         `;
         return acc;
@@ -145,8 +179,117 @@ document.addEventListener("DOMContentLoaded", function () {
     )[0];
     mainContainer.innerHTML = newPaint;
     const searchInput = document.getElementById("search-url");
+    const newUrlInput = document.getElementById("add-url-input");
+    const newUrlBtn = document.getElementById("add-new-btn");
+    const nodesCross = document.getElementsByClassName(
+      "cross-icon-svg-container"
+    );
+
+    // cleanup phase in
+    searchInput.removeEventListener("input", onSearch);
+    newUrlInput.removeEventListener("input", onChangeNewUrlInput);
+    newUrlBtn.removeEventListener("click", onClickAddnewUrlBtn);
+    const nodesCrossArrayCleanup = [...nodesCross];
+    nodesCrossArrayCleanup.forEach((elem) => {
+      elem.removeEventListener("click", CrossHandler);
+    });
+    // cleanup phase out
     searchInput.oninput = onSearch;
+    newUrlInput.oninput = onChangeNewUrlInput;
+    newUrlBtn.onclick = onClickAddnewUrlBtn;
+
+    const nodesCrossArray = [...nodesCross];
+    nodesCrossArray.forEach((elem) => {
+      elem.onclick = CrossHandler;
+    });
     // searchInput.focus();
+  }
+
+  function checkIfUrlIsValid(urlString) {
+    try {
+      const v = new URL(urlString);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function CrossHandler(e) {
+    const dataKey = e.currentTarget.dataset.key;
+    dataPrivateUrls.forEach((elem, index) => {
+      console.log("sdadasd", getKeys(elem));
+      if (getKeys(elem) === dataKey) {
+        console.log(
+          "listOfPrivateTabs",
+          dataPrivateUrls.slice(index, index + 1)
+        );
+        dataPrivateUrls.splice(index, 1);
+        chrome.storage.sync.set(
+          {
+            listOfPrivateTabs: dataPrivateUrls,
+          },
+          () => {
+            paintUI();
+          }
+        );
+      }
+    });
+  }
+  function onChangeNewUrlInput(e) {
+    console.log("onChangeNewUrlInput -> e", e);
+    const value = e.target.value;
+  }
+
+  function onClickAddnewUrlBtn(e) {
+    console.log("onClickAddnewUrlBtn -> e", e);
+    const newUrlInput = document.getElementById("add-url-input");
+
+    const isValid = checkIfUrlIsValid(newUrlInput.value);
+
+    const newUrlValue = newUrlInput.value;
+    if (isValid) {
+      const isDomainSelected = document.getElementById("domain").checked;
+      const isExactSelected = document.getElementById("exact").checked;
+
+      // if(isDomainSelected) {
+
+      // }
+
+      // if()
+      const isAlreadyThere =
+        dataPrivateUrls.filter((elem) => {
+          if (isExactSelected) {
+            return elem.url === newUrlValue;
+          } else {
+            return new URL(newUrlValue).origin === elem.url;
+          }
+        }).length > 0;
+
+      if (!isAlreadyThere) {
+        // add it to the sync storage
+        chrome.storage.sync.set(
+          {
+            listOfPrivateTabs: [
+              ...dataPrivateUrls,
+              {
+                url: isDomainSelected
+                  ? new URL(newUrlValue).origin
+                  : newUrlValue,
+                entireDomain: isDomainSelected,
+                exact: isExactSelected,
+              },
+            ],
+          },
+          () => {
+            newUrlInput.value = "";
+            paintUI();
+          }
+        );
+      } else {
+        // show some error
+      }
+    }
+    console.log("onClickAddnewUrlBtn -> isValid", isValid);
   }
   function paintUI() {
     // chrome.windows.getAll({ populate: true }, function (windows) {
