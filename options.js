@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function getHtmlFromTemplate() {
     return `
     <div class="options-sub-container">
-    <p class="page-heading">Tab Securer</p>
+    <p class="page-heading">Tab Securer  <img style="height: 20px;" src="./images/apple-touch-icon-120x120.png" /></p>
     <div class="section-title">Manage Preferences</div>
   <div id="private-tabs">
     <div class="option-header">
