@@ -5,10 +5,10 @@
   "page_action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "images/favicon-16x16.png",
-      "32": "images/favicon-32x32.png",
-      "48": "images/android-icon-48x48.png",
-      "128": "images/apple-touch-icon-120x120.png"
+      "16": "images/favicon-16x16.ico",
+      "32": "images/favicon-32x32.ico",
+      "48": "images/android-icon-48x48.ico",
+      "128": "images/apple-touch-icon-114x114.png"
     }
   },
   "manifest_version": 2,
@@ -34,10 +34,10 @@
     "notifications"
   ],
   "icons": {
-    "16": "images/favicon-16x16.png",
-    "32": "images/favicon-32x32.png",
-    "48": "images/android-icon-48x48.png",
-    "128": "images/apple-touch-icon-120x120.png"
+    "16": "images/favicon-16x16.ico",
+    "32": "images/favicon-32x32.ico",
+    "48": "images/android-icon-48x48.ico",
+    "128": "images/apple-touch-icon-114x114.png"
   },
 
   "content_security_policy": "object-src 'self'; child-src 'self'; default-src 'self' https://media.giphy.com; style-src 'self' 'unsafe-inline';img-src * data:;",
