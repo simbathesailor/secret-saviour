@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     window.matchMedia("(prefers-color-scheme: dark)").matches
   ) {
     // dark mode
-    console.log("dark mode is on");
+    // console.log("dark mode is on");
     darkMode = true;
   }
 

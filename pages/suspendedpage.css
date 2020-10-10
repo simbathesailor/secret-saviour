@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
   letter-spacing: 0.01rem;
+  --main-cta-color: #ff5f5f;
 }
 
 html {
@@ -51,6 +52,13 @@ html {
 
 .giphy {
   width: 250px;
+}
+
+.brand-icon {
+  height: 40px;
+  position: fixed;
+  right: 30px;
+  top: 30px;
 }
 
 @media (prefers-color-scheme: dark) {
