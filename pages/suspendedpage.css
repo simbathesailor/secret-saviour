@@ -60,6 +60,49 @@ html {
   right: 30px;
   top: 30px;
 }
+/* background: #cde9a5;
+color: #fff */
+
+/* background: #7579e7;
+color: #fff */
+
+/* background: #a3d8f4;
+color: #fff */
+
+/* background: #b9fffc;
+color: #000; */
+
+/* background: #ffefa0;
+color: #000; */
+
+/* background: #fca652;
+color: #fff */
+
+/* background: #99f3bd;
+color: #fff; */
+
+/* background: #ffc1fa;
+color: #fff; */
+
+/* background: #ffe0ac;
+color: #000; */
+
+.box-message {
+  height: 250px;
+  width: 250px;
+  border-radius: 5px;
+  background: #ffe0ac;
+  font-size: 30px;
+  display: flex;
+  flex-direction: column;
+  font-family: cursive;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+.box-message span {
+  letter-spacing: 0.1rem;
+}
 
 @media (prefers-color-scheme: dark) {
   body {

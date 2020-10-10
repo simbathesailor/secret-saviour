@@ -1,6 +1,57 @@
 // let limit =
 document.addEventListener("DOMContentLoaded", function () {
   let darkMode = false;
+
+  let COLOR = [
+    {
+      background: "#cde9a5",
+      color: "#fff",
+    },
+    {
+      background: "#7579e7",
+      color: "#fff",
+    },
+    {
+      background: "#a3d8f4",
+      color: "#fff",
+    },
+    {
+      background: "#b9fffc",
+      color: "#000",
+    },
+    {
+      background: "#ffefa0",
+      color: "#000",
+    },
+    {
+      background: "#fca652",
+      color: "#fff",
+    },
+    {
+      background: "#99f3bd",
+      color: "#fff",
+    },
+    {
+      background: "#ffc1fa",
+      color: "#fff",
+    },
+    {
+      background: "#ffe0ac",
+      color: "#000",
+    },
+  ];
+
+  let len = COLOR.length;
+
+  function getRandom() {
+    return Math.floor(Math.random() * len) + 1;
+  }
+
+  const V = document.querySelectorAll(".box-message")[0];
+  const index = getRandom();
+  V.style.background = COLOR[index - 1].background;
+  V.style.color = COLOR[index - 1].color;
+
   if (
     window.matchMedia &&
     window.matchMedia("(prefers-color-scheme: dark)").matches

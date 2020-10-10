@@ -1,81 +1,31 @@
-// let changeColor = document.getElementById("changeColor");
-
-// chrome.storage.sync.get("color", function (data) {
-//   changeColor.style.backgroundColor = data.color;
-//   changeColor.setAttribute("value", data.color);
-// });
-
-// const maptabIdToobj = {};
-// function handleOnClick() {
-//   console.log("handleClickGot called", maptabIdToobj);
-// }
-
-// changeColor.onclick = function (element) {
-//   let color = element.target.value;
-//   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-//     console.log("changeColor.onclick -> chrome.tabs", tabs);
-
-//     tabs.forEach((elem) => {
-//       maptabIdToobj[elem.id] = elem;
-//     });
-
-//     console.log(chrome.runtime.id);
-
-//     //     active: true
-//     // audible: false
-//     // autoDiscardable: true
-//     // discarded: false
-//     // favIconUrl: "https://www.google.com/images/icons/product/chrome-32.png"
-//     // height: 666
-//     // highlighted: true
-//     // id: 284
-//     // incognito: true
-//     // index: 31
-//     // mutedInfo: {muted: false}
-//     // pinned: false
-//     // selected: true
-//     // status: "complete"
-//     // title: "Getting Started Tutorial - Google Chrome"
-//     // url: "https://developer.chrome.com/extensions/getstarted"
-//     // width: 1680
-//     // windowId: 61
-
-//     chrome.tabs.update(tabs[0].id, {
-//       // url: `chrome-extension://${chrome.runtime.id}/pages/suspendedpage.html`,
-//       url: chrome.runtime.getURL(
-//         `pages/suspendedpage.html?url=${tabs[0].url}&title=${tabs[0].title}`
-//       ),
-//     });
-//     // onclick='handleOnClick()'
-//     // function handleOnClick() {
-//     //   chrome.runtime.sendMessage({greeting: ${JSON.stringify(
-//     //     tabs[0]
-//     //   )}}, function(response) {
-//     //     console.log(response.farewell);
-//     //   });
-//     // }
-
-//     // chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
-//     //   console.log(response.farewell);
-//     // });
-
-//     // document.body.style.backgroundColor = "${color}";
-//     // var domparser = new DOMParser();
-//     // var doc = domparser.parseFromString("<div>There you go boy ${tabs[0].title}</div>", "text/html")
-//     // document.body = doc.body
-
-//     // chrome.tabs.executeScript(tabs[0].id, {
-//     //   code: `
-
-//     //   `,
-//     // });
-//   });
-// };
-
 // document.addEventListener("DOMContentLoaded", function () {
 
 /**
  * Common utils start
+ */
+
+/**
+ * Ga specific section below
+ *
+ * @var {[type]}
+ */
+var _gaq = _gaq || [];
+_gaq.push(["_setAccount", "UA-180247743-1"]);
+_gaq.push(["_trackPageview"]);
+
+(function () {
+  var ga = document.createElement("script");
+  ga.type = "text/javascript";
+  ga.async = true;
+  ga.src = "https://ssl.google-analytics.com/ga.js";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(ga, s);
+})();
+
+/**
+ * Ga specific section above
+ *
+ * @var {[type]}
  */
 
 function isAlreadyThere(obj, existingData) {
@@ -164,6 +114,7 @@ function renderUI() {
     const ExcludeListRegex = [
       /^chrome-extension:\/\//,
       /^chrome:\/\/extensions/,
+      /^chrome:\/\/newtab\//,
     ];
 
     let isValid = true;
@@ -327,6 +278,7 @@ function renderUI() {
 }
 
 function onClickSetting() {
+  _gaq.push(["_trackEvent", "Settings", "clicked"]);
   const url = chrome.runtime.getURL(`options.html`);
   chrome.tabs.create(
     {
@@ -460,6 +412,8 @@ function onClickMarkAsPrivate(e) {
   // }
 
   const type = e.target.dataset.marktype; // exact , domain
+
+  _gaq.push(["_trackEvent", `mark / unmark private (${type})`, "clicked"]);
   // console.log("onClickMarkAsPrivate -> type", type);
 
   chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
@@ -539,6 +493,7 @@ function onClickMarkAsPrivate(e) {
 
 // https://developers.chrome.com/extensions/overview
 function onClickHideAllPrivate() {
+  _gaq.push(["_trackEvent", "hide all private", "clicked"]);
   // get all the tabs open currently
   // console.log("chrome.runtime.getURL(string path)", chrome.runtime.getURL(""));
   chrome.windows.getAll({ populate: true }, function (windows) {
@@ -633,21 +588,12 @@ function onClickHideAllPrivate() {
           // }
         });
       }
-      //       id: 1055
-      // incognito: true
-      // index: 34
-      // chrome.tabs.update(integer tabId, object updateProperties, function callback)
-
-      // chrome.tabs.update(tab.id, {
-      //   url: chrome.runtime.getURL(
-      //     `pages/suspendedpage.html?url=${tab.url}&title=${tab.title}`
-      //   ),
-      // });
     });
   });
 }
 
 function onClickBringBackPrivate() {
+  _gaq.push(["_trackEvent", "bring-back-tabs", "clicked"]);
   getAllWIndowANdGiveMetabOnWhichPagesAreHidden(({ tabs }) => {
     // console.log("onClickBringBackPrivate -> tabs", tabs);
     countOfPrivateTabsHidden = tabs.length || 0;

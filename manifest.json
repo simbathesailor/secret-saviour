@@ -40,7 +40,7 @@
     "128": "images/apple-touch-icon-114x114.png"
   },
 
-  "content_security_policy": "object-src 'self'; child-src 'self'; default-src 'self' https://media.giphy.com  https://cdnjs.buymeacoffee.com https://fonts.googleapis.com; style-src * 'self' 'unsafe-inline';img-src * data:; font-src *;",
+  "content_security_policy": "object-src 'self'; child-src 'self'; default-src 'self' https://media.giphy.com  https://cdnjs.buymeacoffee.com https://fonts.googleapis.com; style-src * 'self' 'unsafe-inline';img-src * data:; font-src *;script-src 'self' https://ssl.google-analytics.com;",
   "options_page": "options.html",
 
   "content_scripts": [
