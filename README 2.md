@@ -151,3 +151,5 @@ https://www.youtube.com/watch?v=YQnRSa8MGwM
 "js": ["pages/suspendedpage.js"]
 }
 ]
+
+"devtools_page": "devtools/devtools.html",

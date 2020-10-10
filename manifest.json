@@ -30,7 +30,8 @@
     "activeTab",
     "storage",
     "contextMenus",
-    "notifications"
+    "notifications",
+    "declarativeContent"
   ],
   "icons": {
     "16": "images/favicon-16x16.ico",
@@ -49,5 +50,5 @@
       "js": ["contentScripts/main.js"]
     }
   ],
-  "incognito": "spanning"
+  "incognito": "split"
 }

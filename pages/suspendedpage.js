@@ -1,5 +1,3 @@
-console.log("some value");
-
 // let limit =
 document.addEventListener("DOMContentLoaded", function () {
   let darkMode = false;
@@ -11,32 +9,16 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("dark mode is on");
     darkMode = true;
   }
-  // window
-  //   .matchMedia("(prefers-color-scheme: dark)")
-  //   .addEventListener("change", (e) => {
-  //     const newColorScheme = e.matches ? "dark" : "light";
-  //     console.log("newColorScheme", newColorScheme);
-  //   });
-
-  // if (darkMode) {
-  //   document.body.style.backgroundColor = "#000";
-  // }
-  console.log("some value in suspended page");
 
   const startTimeWHenStartedSHowingThePage = new Date();
-  console.log(
-    "startTimeWHenStartedSHowingThePage",
-    startTimeWHenStartedSHowingThePage
-  );
 
   var searchParams = new URLSearchParams(location.search);
-  console.log("searchParams", searchParams);
 
   //Iterate the search parameters.
 
   let searchParamObj = {};
   for (let p of searchParams) {
-    console.log(p);
+    // console.log(p);
     searchParamObj[p[0]] = p[1];
   }
 

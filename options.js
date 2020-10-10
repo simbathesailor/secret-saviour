@@ -236,12 +236,12 @@ document.addEventListener("DOMContentLoaded", function () {
   function CrossHandler(e) {
     const dataKey = e.currentTarget.dataset.key;
     dataPrivateUrls.forEach((elem, index) => {
-      console.log("sdadasd", getKeys(elem));
+      // console.log("sdadasd", getKeys(elem));
       if (getKeys(elem) === dataKey) {
-        console.log(
-          "listOfPrivateTabs",
-          dataPrivateUrls.slice(index, index + 1)
-        );
+        // console.log(
+        //   "listOfPrivateTabs",
+        //   dataPrivateUrls.slice(index, index + 1)
+        // );
         dataPrivateUrls.splice(index, 1);
         chrome.storage.sync.set(
           {
@@ -255,12 +255,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
   function onChangeNewUrlInput(e) {
-    console.log("onChangeNewUrlInput -> e", e);
+    // console.log("onChangeNewUrlInput -> e", e);
     const value = e.target.value;
   }
 
   function onClickAddnewUrlBtn(e) {
-    console.log("onClickAddnewUrlBtn -> e", e);
+    // console.log("onClickAddnewUrlBtn -> e", e);
     const newUrlInput = document.getElementById("add-url-input");
 
     const isValid = checkIfUrlIsValid(newUrlInput.value);
@@ -308,7 +308,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // show some error
       }
     }
-    console.log("onClickAddnewUrlBtn -> isValid", isValid);
+    // console.log("onClickAddnewUrlBtn -> isValid", isValid);
   }
   function paintUI() {
     // chrome.windows.getAll({ populate: true }, function (windows) {
@@ -321,7 +321,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // })
 
     chrome.storage.sync.get("listOfPrivateTabs", function (data) {
-      console.log("data", data);
+      // console.log("data", data);
       dataPrivateUrls = data ? data.listOfPrivateTabs || [] : [];
       dataAfterSearchApplied = dataPrivateUrls.filter((elem) => {
         return (
@@ -338,14 +338,14 @@ document.addEventListener("DOMContentLoaded", function () {
   chrome.storage.onChanged.addListener(function (changes, namespace) {
     for (var key in changes) {
       var storageChange = changes[key];
-      console.log(
-        'Storage key "%s" in namespace "%s" changed. ' +
-          'Old value was "%s", new value is "%s".',
-        key,
-        namespace,
-        storageChange.oldValue,
-        storageChange.newValue
-      );
+      // console.log(
+      //   'Storage key "%s" in namespace "%s" changed. ' +
+      //     'Old value was "%s", new value is "%s".',
+      //   key,
+      //   namespace,
+      //   storageChange.oldValue,
+      //   storageChange.newValue
+      // );
     }
   });
 

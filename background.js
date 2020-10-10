@@ -22,29 +22,29 @@ chrome.runtime.onInstalled.addListener(function () {
   // });
 
   // if (chrome.declarativeContent.onPageChanged) {
-  // chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
-  //   chrome.declarativeContent.onPageChanged.addRules([
-  //     {
-  //       conditions: [
-  //         // new chrome.declarativeContent.PageStateMatcher({
-  //         //   pageUrl: { pathContains: "", },
-  //         // }),
-  //         new chrome.declarativeContent.PageStateMatcher({
-  //           pageUrl: { urlPrefix: "https://" },
-  //         }),
-  //         new chrome.declarativeContent.PageStateMatcher({
-  //           pageUrl: { urlPrefix: "http://" },
-  //         }),
-  //       ],
-  //       actions: [new chrome.declarativeContent.ShowPageAction()],
-  //     },
-  //   ]);
-  // });
+  chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
+    chrome.declarativeContent.onPageChanged.addRules([
+      {
+        conditions: [
+          // new chrome.declarativeContent.PageStateMatcher({
+          //   pageUrl: { pathContains: "", },
+          // }),
+          new chrome.declarativeContent.PageStateMatcher({
+            pageUrl: { urlPrefix: "https://" },
+          }),
+          new chrome.declarativeContent.PageStateMatcher({
+            pageUrl: { urlPrefix: "http://" },
+          }),
+        ],
+        actions: [new chrome.declarativeContent.ShowPageAction()],
+      },
+    ]);
+  });
   // }
 
   chrome.runtime.onMessage.addListener(function (message, sender, callback) {
-    console.log("sender", sender);
-    console.log("message", message);
+    // console.log("sender", sender);
+    // console.log("message", message);
 
     if (message.type === "trigger_redirection_tosuspended_page") {
       // I need to create the redirection link for the

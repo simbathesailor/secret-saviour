@@ -156,15 +156,26 @@ let isCurrentTabPrivate = false;
 
 function renderUI() {
   chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-    console.log("renderUI -> tabs", tabs);
     const incomingUrl = tabs[0].url;
-    console.log("renderUI -> incomingUrl", incomingUrl);
 
     // Check if the current tab is part of list of private tabs and
     // showing an indicator
 
+    const ExcludeListRegex = [
+      /^chrome-extension:\/\//,
+      /^chrome:\/\/extensions/,
+    ];
+
+    let isValid = true;
+
+    ExcludeListRegex.forEach((elem) => {
+      if (elem.test(incomingUrl)) {
+        isValid = false;
+      }
+    });
+
     chrome.storage.sync.get("listOfPrivateTabs", function (data) {
-      console.log("renderUI -> data.listOfPrivateTabs", data.listOfPrivateTabs);
+      // console.log("renderUI -> data.listOfPrivateTabs", data.listOfPrivateTabs);
 
       const {
         isExactMatchOuter,
@@ -179,26 +190,53 @@ function renderUI() {
         data.listOfPrivateTabs || []
       );
 
-      console.log(
-        "renderUI ->",
-        isExactMatchOuter,
-        exactMatchIndex,
-        isDomainMatchOuter,
-        domainMatchindex,
-        hasMatched
-      );
-
       const popupContainerElem = document.querySelectorAll(
         ".popup-container"
       )[0];
 
       // const parentpopUpBody = popupbody.parentNode.insertBefore(<div></div>, popupbody.previousSibling)
 
+      //   if(!isValid) {
+      //     popupContainerElem.innerHTML = `
+
+      //     <div class="popup-header">
+      //     <p>Tab Securer</p>
+
+      //   </div>
+      //   <div class="info-section">
+      //     <div class="left-section">
+      //       <span>Private Tabs Open</span>
+      //       <span>${countOfPrivateTabsOpen}</span>
+      //     </div>
+      //     <div class="right-section">
+      //       <span> Secured Tabs </span><span> ${countOfPrivateTabsHidden}</span>
+      //     </div>
+      //   </div>
+      //   <div class="popup-body">
+      //   <ul class="popup-body-list">
+
+      //     <li>
+      //     <p id="hide-all-private">Hide All Private</p>
+
+      //   </li>
+      //   <li>
+      //   <p id="bring-back-private">Revive Private Tabs</p>
+      // </li>
+      // <li>
+      //         <p id="extension-settings">Settings</p>
+      // </li>
+      //   </ul>
+      //   </div>
+
+      //     `
+
+      //   }
+
       popupContainerElem.innerHTML = `
 
       <div class="popup-header">
       <p>Tab Securer</p>
-      ${isCurrentTabPrivate ? `<span id="private-tag">P</span>` : ``}
+      ${isCurrentTabPrivate && isValid ? `<span id="private-tag">P</span>` : ``}
     </div>
     <div class="info-section">
       <div class="left-section">
@@ -211,17 +249,30 @@ function renderUI() {
     </div>
     <div class="popup-body">
     <ul class="popup-body-list">
-    <li ><p data-marktype="domain" id="mark-domain-private">${
-      isDomainMatchOuter ? "Unmark Domain" : "Mark Domain"
-    }</p></li>
-   
-      
+    ${
+      isValid
+        ? `
+      <li ><p data-marktype="domain" id="mark-domain-private">${
+        isDomainMatchOuter ? "Unmark Domain" : "Mark Domain"
+      }</p></li>
+     
+      `
+        : ``
+    }
+    
+    ${
+      isValid
+        ? `
       <li>
           <p data-marktype="exact" id="mark-as-private">${
             isExactMatchOuter ? "Unmark URL" : "Mark URL"
           }</p>
           ${isExactMatchOuter ? `<span>DONE</span>` : ``}
       </li>
+      `
+        : ``
+    }
+      
       <li>
       <p id="hide-all-private">Hide All Private</p>
     
@@ -252,13 +303,25 @@ function renderUI() {
       //   `pages/suspendedpage.html?url=${tab.url}&title=${tab.title}`
       // )
 
-      hideAllPrivateBtn.onclick = onClickHideAllPrivate;
+      if (hideAllPrivateBtn) {
+        hideAllPrivateBtn.onclick = onClickHideAllPrivate;
+      }
 
-      markAsPrivateButton.onclick = onClickMarkAsPrivate;
+      if (markAsPrivateButton) {
+        markAsPrivateButton.onclick = onClickMarkAsPrivate;
+      }
 
-      markDomainPrivateBtn.onclick = onClickMarkAsPrivate;
-      bringBackPrivate.onclick = onClickBringBackPrivate;
-      extensionSettingsPage.onclick = onClickSetting;
+      if (markDomainPrivateBtn) {
+        markDomainPrivateBtn.onclick = onClickMarkAsPrivate;
+      }
+
+      if (bringBackPrivate) {
+        bringBackPrivate.onclick = onClickBringBackPrivate;
+      }
+
+      if (extensionSettingsPage) {
+        extensionSettingsPage.onclick = onClickSetting;
+      }
     });
   });
 }
@@ -281,10 +344,10 @@ function getAllWIndowANdGiveMetabOnWhichPagesAreHidden(callback) {
   chrome.windows.getAll({ populate: true }, function (windows) {
     let tabsOpenCurrently = [];
     windows.forEach(function (window) {
-      console.log("onClickHideAllPrivate -> window", window);
+      // console.log("onClickHideAllPrivate -> window", window);
       tabsOpenCurrently = [...tabsOpenCurrently, ...window.tabs];
     });
-    console.log("tabsOpenCurrently", tabsOpenCurrently);
+    // console.log("tabsOpenCurrently", tabsOpenCurrently);
     const extensionUrl = chrome.runtime.getURL("");
     const tabInfoArrayWhichhaveExtensionPlaceHolderActive = tabsOpenCurrently.filter(
       (tabsInfo) => {
@@ -306,14 +369,14 @@ function getAllWIndowAndDetermineHowManyPagesAreOpen(callback) {
     chrome.windows.getAll({ populate: true }, function (windows) {
       let tabsOpenCurrently = [];
       windows.forEach(function (window) {
-        console.log("onClickHideAllPrivate -> window", window);
+        // console.log("onClickHideAllPrivate -> window", window);
         tabsOpenCurrently = [...tabsOpenCurrently, ...window.tabs];
         // window.tabs.forEach(function (tab) {
         //   //collect all of the urls here, I will just log them instead
         //   console.log(tab.url);
         // });
       });
-      console.log("tabsOpenCurrently", tabsOpenCurrently);
+      // console.log("tabsOpenCurrently", tabsOpenCurrently);
       // const extensionUrl = chrome.runtime.getURL("");
       const tabInfoArrayWhichComesUnderprivateButOpen = tabsOpenCurrently.filter(
         (tabsInfo) => {
@@ -345,7 +408,7 @@ function getAllWIndowAndDetermineHowManyPagesAreOpen(callback) {
 
 function updateSecuredTabsCount() {
   getAllWIndowANdGiveMetabOnWhichPagesAreHidden(({ tabs }) => {
-    console.log("tabs =====xxxxx==>", tabs);
+    // console.log("tabs =====xxxxx==>", tabs);
     countOfPrivateTabsHidden = tabs.length || 0;
     renderUI();
   });
@@ -353,7 +416,7 @@ function updateSecuredTabsCount() {
 
 function updatePrivateButNotSecuredCount() {
   getAllWIndowAndDetermineHowManyPagesAreOpen(({ tabs }) => {
-    console.log("updatePrivateButNotSecuredCount -> tabs", tabs);
+    // console.log("updatePrivateButNotSecuredCount -> tabs", tabs);
     // console.log("tabs =====xxxxx==>", tabs);
     // Here we get all the tabs which are open, useful if I want to show any modal
     // using content script
@@ -397,7 +460,7 @@ function onClickMarkAsPrivate(e) {
   // }
 
   const type = e.target.dataset.marktype; // exact , domain
-  console.log("onClickMarkAsPrivate -> type", type);
+  // console.log("onClickMarkAsPrivate -> type", type);
 
   chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
     // console.log("markAsPrivateButton.onclick -> tabs", tabs);
@@ -407,7 +470,7 @@ function onClickMarkAsPrivate(e) {
 
     // Marking As Private logic start
     chrome.storage.sync.get("listOfPrivateTabs", function (data) {
-      console.log("data ==>", data);
+      // console.log("data ==>", data);
       let newData = [];
 
       let parsedIncomingUrl = new URL(incomingUrl);
@@ -448,10 +511,10 @@ function onClickMarkAsPrivate(e) {
           finalIndexToNotInclude = domainMatchindex;
         }
 
-        console.log(
-          "onClickMarkAsPrivate -> finalIndexToNotInclude",
-          finalIndexToNotInclude
-        );
+        // console.log(
+        //   "onClickMarkAsPrivate -> finalIndexToNotInclude",
+        //   finalIndexToNotInclude
+        // );
         if (finalIndexToNotInclude !== -1) {
           newData = data.listOfPrivateTabs.filter(
             (elem, index) => index !== finalIndexToNotInclude
@@ -479,12 +542,12 @@ function onClickHideAllPrivate() {
   // get all the tabs open currently
   // console.log("chrome.runtime.getURL(string path)", chrome.runtime.getURL(""));
   chrome.windows.getAll({ populate: true }, function (windows) {
-    console.log("onClickHideAllPrivate -> windows", windows);
+    // console.log("onClickHideAllPrivate -> windows", windows);
     let tabsOpenCurrently = [];
 
     // multiple windows can be there
     windows.forEach(function (window) {
-      console.log("onClickHideAllPrivate -> window", window);
+      // console.log("onClickHideAllPrivate -> window", window);
       tabsOpenCurrently = [...tabsOpenCurrently, ...window.tabs];
       // window.tabs.forEach(function (tab) {
       //   //collect all of the urls here, I will just log them instead
@@ -495,7 +558,7 @@ function onClickHideAllPrivate() {
     // nopw i need to pick the tabs marked as private
 
     chrome.storage.sync.get("listOfPrivateTabs", function (data) {
-      console.log("onClickHideAllPrivate -> data", data);
+      // console.log("onClickHideAllPrivate -> data", data);
 
       let newData = [];
       // let count = 0;
@@ -521,19 +584,27 @@ function onClickHideAllPrivate() {
         });
 
         // countOfPrivateTabsHidden
-        console.log(
-          "onClickHideAllPrivate -> countOfPrivateTabsHidden",
-          countOfPrivateTabsHidden
-        );
+        // console.log(
+        //   "onClickHideAllPrivate -> countOfPrivateTabsHidden",
+        //   countOfPrivateTabsHidden
+        // );
 
         // chrome.storage.sync.set({
         //   countOfPrivateTabsHidden,
         // });
         // console.log("count ==>", countOfPrivateTabsHidden, tabsToTakenActionOn);
         tabsToTakenActionOn.forEach((individualTab, index) => {
-          console.log(`suspending for ${individualTab.url}`);
+          // console.log(`suspending for ${individualTab.url}`);
           // individualTab.favIconUrl  =
           let idTab = individualTab.id;
+          // const isIncognito = individualTab.incognito;
+
+          // if (isIncognito) {
+          //   console.log("onClickHideAllPrivate -> isIncognito", isIncognito);
+          //   chrome.tabs.sendMessage(idTab, {
+          //     type: "changetosuspendedpage",
+          //   });
+          // } else {
           chrome.tabs.update(
             individualTab.id,
             {
@@ -543,7 +614,7 @@ function onClickHideAllPrivate() {
             },
             (tabDone) => {
               // sending the tan to change the favicon
-              console.log(tabDone);
+              // console.log(tabDone);
               // const idTab = individualTab.id
               // chrome.tabs.connect
 
@@ -553,21 +624,13 @@ function onClickHideAllPrivate() {
               // });
               // tabDone.favIconUrl = individualTab.favIconUrl;
               if (index === tabsToTakenActionOn.length - 1) {
-                // rendering when we reach in the end of updating the tabs.
-                // just an information to see the count of tabs currently saved
-                // This renderUi is updateing Tabs
-                // renderUI();
-                // getAllWIndowANdGiveMetabOnWhichPagesAreHidden(({ tabs }) => {
-                //   console.log("tabs =====xxxxx==>", tabs);
-                //   countOfPrivateTabsHidden = tabs.length || 0;
-                //   renderUI();
-                // });
                 updateSecuredTabsCount();
                 updatePrivateButNotSecuredCount();
                 updateSecuredTabsCount();
               }
             }
           );
+          // }
         });
       }
       //       id: 1055
@@ -586,7 +649,7 @@ function onClickHideAllPrivate() {
 
 function onClickBringBackPrivate() {
   getAllWIndowANdGiveMetabOnWhichPagesAreHidden(({ tabs }) => {
-    console.log("onClickBringBackPrivate -> tabs", tabs);
+    // console.log("onClickBringBackPrivate -> tabs", tabs);
     countOfPrivateTabsHidden = tabs.length || 0;
     renderUI();
     tabs.forEach((tabInfo, index) => {
@@ -597,7 +660,7 @@ function onClickBringBackPrivate() {
       const searchParamObj = {};
       const searchParams = new URLSearchParams(search);
       for (let p of searchParams) {
-        console.log(p);
+        // console.log(p);
         searchParamObj[p[0]] = p[1];
       }
 

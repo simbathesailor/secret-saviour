@@ -61,6 +61,8 @@ up in browser
 "48": "icon48.png",
 "128": "icon128.png" },
 
+https://stackoverflow.com/questions/41420528/communicate-between-scripts-in-the-background-context-background-script-browse
+
 Mozilla specific docs:
 
 https://www.extensiontest.com/test/bdfecc80-0adb-11eb-adfc-fd92bd9f8483
