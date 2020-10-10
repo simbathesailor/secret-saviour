@@ -1,0 +1,127 @@
+{
+  "compat": [],
+  "errors": [
+    {
+      "message": "\"/incognito\" should be equal to one of the allowed values",
+      "description": "Your JSON file could not be parsed.",
+      "locations": [
+        {}
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "message": "\"content_security_policy\" allows remote code execution in manifest.json",
+      "description": "A custom content_security_policy needs additional review.",
+      "locations": [
+        {
+          "file": "manifest.json"
+        }
+      ]
+    },
+    {
+      "message": "Unsupported image extension",
+      "description": "Icons should be one of JPG/JPEG, WebP, GIF, PNG or SVG.",
+      "locations": [
+        {
+          "file": "manifest.json"
+        },
+        {
+          "file": "manifest.json"
+        },
+        {
+          "file": "manifest.json"
+        },
+        {
+          "file": "manifest.json"
+        },
+        {
+          "file": "manifest.json"
+        },
+        {
+          "file": "manifest.json"
+        }
+      ]
+    },
+    {
+      "message": "The size of the icon does not match the manifest.",
+      "description": "Expected icon at \"images/apple-touch-icon-114x114.png\" to be 128 pixels wide but was 114.",
+      "locations": [
+        {
+          "file": "manifest.json"
+        },
+        {
+          "file": "manifest.json"
+        }
+      ]
+    },
+    {
+      "message": "Unsafe assignment to innerHTML",
+      "description": "Due to both security and performance concerns, this may not be set using dynamic values which have not been adequately sanitized. This can lead to security issues or fairly serious performance degradation.",
+      "locations": [
+        {
+          "file": "options.js",
+          "line": 199
+        },
+        {
+          "file": "options.js",
+          "line": 357
+        },
+        {
+          "file": "pages/suspendedpage.js",
+          "line": 52
+        },
+        {
+          "file": "pages/suspendedpage.js",
+          "line": 53
+        },
+        {
+          "file": "popup.js",
+          "line": 197
+        }
+      ]
+    },
+    {
+      "message": "\"storage.sync\" can cause issues when loaded temporarily",
+      "description": "This API can cause issues when loaded temporarily using about:debugging in Firefox unless you specify applications|browser_specific_settings > gecko > id in the manifest. Please see: https://mzl.la/2hizK4a for more.",
+      "locations": [
+        {
+          "file": "options.js",
+          "line": 246
+        },
+        {
+          "file": "options.js",
+          "line": 289
+        },
+        {
+          "file": "options.js",
+          "line": 323
+        },
+        {
+          "file": "popup.js",
+          "line": 166
+        },
+        {
+          "file": "popup.js",
+          "line": 305
+        },
+        {
+          "file": "popup.js",
+          "line": 369
+        },
+        {
+          "file": "popup.js",
+          "line": 409
+        },
+        {
+          "file": "popup.js",
+          "line": 465
+        },
+        {
+          "file": "popup.js",
+          "line": 497
+        }
+      ]
+    }
+  ]
+}

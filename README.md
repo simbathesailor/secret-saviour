@@ -60,3 +60,16 @@ up in browser
 "icons": { "16": "icon16.png",
 "48": "icon48.png",
 "128": "icon128.png" },
+
+Mozilla specific docs:
+
+https://www.extensiontest.com/test/bdfecc80-0adb-11eb-adfc-fd92bd9f8483
+
+https://extensionworkshop.com/documentation/develop/temporary-installation-in-firefox/
+
+Open this page for debigging
+about:debugging#/runtime/this-firefox
+
+Safari:
+
+https://developer.apple.com/documentation/safariservices/safari_web_extensions/converting_a_web_extension_for_safari

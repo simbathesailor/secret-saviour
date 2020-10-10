@@ -17,22 +17,30 @@
 // chrome.tabs.sendMessage(tab.id, msg)
 
 chrome.runtime.onInstalled.addListener(function () {
-  chrome.storage.sync.set({ color: "#3aa757" }, function () {
-    console.log("The color is green.");
-  });
+  // chrome.storage.sync.set({ color: "#3aa757" }, function () {
+  //   console.log("The color is green.");
+  // });
 
-  chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
-    chrome.declarativeContent.onPageChanged.addRules([
-      {
-        conditions: [
-          new chrome.declarativeContent.PageStateMatcher({
-            pageUrl: { pathContains: "" },
-          }),
-        ],
-        actions: [new chrome.declarativeContent.ShowPageAction()],
-      },
-    ]);
-  });
+  // if (chrome.declarativeContent.onPageChanged) {
+  // chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
+  //   chrome.declarativeContent.onPageChanged.addRules([
+  //     {
+  //       conditions: [
+  //         // new chrome.declarativeContent.PageStateMatcher({
+  //         //   pageUrl: { pathContains: "", },
+  //         // }),
+  //         new chrome.declarativeContent.PageStateMatcher({
+  //           pageUrl: { urlPrefix: "https://" },
+  //         }),
+  //         new chrome.declarativeContent.PageStateMatcher({
+  //           pageUrl: { urlPrefix: "http://" },
+  //         }),
+  //       ],
+  //       actions: [new chrome.declarativeContent.ShowPageAction()],
+  //     },
+  //   ]);
+  // });
+  // }
 
   chrome.runtime.onMessage.addListener(function (message, sender, callback) {
     console.log("sender", sender);
@@ -76,7 +84,7 @@ chrome.runtime.onInstalled.addListener(function () {
   });
 
   chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-    console.log("tabId, changeInfo,tab", tabId, changeInfo, tab);
+    // console.log("tabId, changeInfo,tab", tabId, changeInfo, tab);
   });
 
   // chrome.runtime.onInstalled.addListener(function () {

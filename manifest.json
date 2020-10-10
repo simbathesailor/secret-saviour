@@ -2,7 +2,7 @@
   "name": "Tab Securer",
   "description": "An extension to secure your private tabs.",
   "version": "1.0",
-  "page_action": {
+  "browser_action": {
     "default_popup": "popup.html",
     "default_icon": {
       "16": "images/favicon-16x16.ico",
@@ -28,7 +28,6 @@
   "permissions": [
     "tabs",
     "activeTab",
-    "declarativeContent",
     "storage",
     "contextMenus",
     "notifications"
@@ -50,5 +49,5 @@
       "js": ["contentScripts/main.js"]
     }
   ],
-  "incognito": "split"
+  "incognito": "spanning"
 }
