@@ -47,7 +47,6 @@ document.addEventListener("DOMContentLoaded", function () {
   let searchValueOutside = "";
   function getTickUI() {
     return `
-  
   <svg class="tick-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#00bb02" viewBox="0 0 24 24"><path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"/></svg>
   `;
   }
@@ -60,7 +59,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function arrowIcon() {
     return `
-    
     <svg
         class="arrow-icon right"
         xmlns="http://www.w3.org/2000/svg"
@@ -100,6 +98,14 @@ document.addEventListener("DOMContentLoaded", function () {
     `;
   }
 
+  function getEmptyStateHTML(message) {
+    return `
+      <div class="empty-container">
+        <p>${message}</p>
+      </div>
+    `;
+  }
+
   function getCrossIcon() {
     return `
     <svg 
@@ -115,66 +121,72 @@ document.addEventListener("DOMContentLoaded", function () {
   function getHtmlFromTemplate() {
     return `
     <div class="options-sub-container">
-    <p class="page-heading">Tab Securer  <img style="height: 20px;" src="./images/apple-touch-icon-120x120.png" /></p>
+    <p class="page-heading">
+      Tab Securer
+      <img src="./images/apple-touch-icon-120x120.png" />
+    </p>
     <div class="section-title">Manage Preferences</div>
   <div id="private-tabs">
     <div class="option-header">
-      <p>All Private Tabs</p>
-
-      
+      <p>All Private Tabs</p>      
     </div>
     <div class="add-url-layer-container">
         <div class="add-url-layer">
-          <input type="text" id="add-url-input" placeholder="Add New URL"/> <button id="add-new-btn">Add New URL</button>
+          <input type="text" id="add-url-input" placeholder="Add New URL"/>
+          <button id="add-new-btn">Add New URL</button>
         </div>
         <div class="add-url-radio-layer">
-        <input type="radio" id="domain" name="type-url" value="domain"  checked="true">
-        <label for="domain">Domain</label>
-        <input type="radio" id="exact" name="type-url" value="exact">
-        <label for="exact">Exact</label>
-
-       
+          <input type="radio" id="domain" name="type-url" value="domain"  checked="true">
+          <label for="domain">Domain</label>
+          <input type="radio" id="exact" name="type-url" value="exact">
+          <label for="exact">Exact</label>
         </div>
-       
     </div>
     <div class="option-detail-section">
       <ul class="options-list">
       <li class="option-row header">
       <span></span>
-        <span
-         class="search-url-header"
-        >URL <span> <input id='search-url' value="${searchValueOutside}" type="text" placeholder="Search" /></span></span>
-        <span>Domain</span>
-        <span>
+        <span class="search-url-header">
+          URL
+            <span>
+              <input id='search-url' value="${searchValueOutside}" type="text" placeholder="Search" />
+            </span>
+        </span>
+        <span class="center-column">Domain</span>
+        <span class="center-column">
           Exact
         </span>
-       
         </li>
         <ul class="table-body">
         ${(() => {
-          return dataAfterSearchApplied.reduce((acc, elem, index) => {
-            const { url, exact, entireDomain, favIconUrl } = elem;
-            acc = `
+          return dataAfterSearchApplied.length
+            ? dataAfterSearchApplied.reduce((acc, elem, index) => {
+                const { url, exact, entireDomain, favIconUrl } = elem;
+                acc = `
             ${acc}
             <li class="option-row">
               ${
                 favIconUrl
-                  ? `<img class="favicon-url" src="${favIconUrl}" />`
+                  ? `<span>
+                      <img class="favicon-url" src="${favIconUrl}" />
+                    </span>`
                   : `<span>${getGlobeIcon()}</span>`
               }
-              <span><a href="${url}" target="__blank">${url}</a></span>
-              <span>  ${entireDomain ? getTickUI() : ""}</span>
-              <span>
+              <span><a href="${url}" title="${url}" target="__blank">${url}</a></span>
+              <span class="center-column">${
+                entireDomain ? getTickUI() : ""
+              }</span>
+              <span class="center-column">
                ${exact ? getTickUI() : ``} 
               </span>
-             
               <span data-key="${getKeys(
                 elem
-              )}" class="cross-icon-svg-container">REMOVE</span>
+              )}" class="remove-button">REMOVE</span>
             </li>
             `;
-            return acc;
-          }, ``);
+                return acc;
+              }, ``)
+            : getEmptyStateHTML("Sorry, No marked domains or urls found!");
         })()}
         </ul>
       </ul>
@@ -185,31 +197,37 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function rerenderBelowHeader() {
+    if (!dataPrivateUrls.length) {
+      return getEmptyStateHTML("Sorry, No marked domains or urls found!");
+    }
     return `
     ${(() => {
-      return dataAfterSearchApplied.reduce((acc, elem) => {
-        const { url, exact, entireDomain, favIconUrl } = elem;
-        acc = `
+      return dataAfterSearchApplied.length
+        ? dataAfterSearchApplied.reduce((acc, elem, index) => {
+            const { url, exact, entireDomain, favIconUrl } = elem;
+            acc = `
         ${acc}
         <li class="option-row">
           ${
             favIconUrl
-              ? `<img class="favicon-url" src="${favIconUrl}" />`
+              ? `<span>
+                  <img class="favicon-url" src="${favIconUrl}" />
+                </span>`
               : `<span>${getGlobeIcon()}</span>`
           }
-          <span><a href="${url}" target="__blank">${url}</a></span>
-          <span>  ${entireDomain ? getTickUI() : ""}</span>
-          <span>
+          <span><a href="${url}" title="${url}" target="__blank">${url}</a></span>
+          <span class="center-column">${entireDomain ? getTickUI() : ""}</span>
+          <span class="center-column">
            ${exact ? getTickUI() : ``} 
           </span>
-         
-          <span data-key="${getKeys(
-            elem
-          )}" class="cross-icon-svg-container">REMOVE</span>
+          <span data-key="${getKeys(elem)}" class="remove-button">REMOVE</span>
         </li>
         `;
-        return acc;
-      }, ``);
+            return acc;
+          }, ``)
+        : getEmptyStateHTML(
+            "Sorry, we can't seem to find what you're looking for :("
+          );
     })()}
     `;
   }
@@ -223,9 +241,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById("search-url");
     const newUrlInput = document.getElementById("add-url-input");
     const newUrlBtn = document.getElementById("add-new-btn");
-    const nodesCross = document.getElementsByClassName(
-      "cross-icon-svg-container"
-    );
+    const nodesCross = document.getElementsByClassName("remove-button");
 
     // cleanup phase in
     searchInput.removeEventListener("input", onSearch);
@@ -244,7 +260,6 @@ document.addEventListener("DOMContentLoaded", function () {
     nodesCrossArray.forEach((elem) => {
       elem.onclick = CrossHandler;
     });
-    // searchInput.focus();
   }
 
   function checkIfUrlIsValid(urlString) {
@@ -259,12 +274,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function CrossHandler(e) {
     const dataKey = e.currentTarget.dataset.key;
     dataPrivateUrls.forEach((elem, index) => {
-      // console.log("sdadasd", getKeys(elem));
       if (getKeys(elem) === dataKey) {
-        // console.log(
-        //   "listOfPrivateTabs",
-        //   dataPrivateUrls.slice(index, index + 1)
-        // );
         dataPrivateUrls.splice(index, 1);
         chrome.storage.sync.set(
           {
@@ -374,27 +384,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function replacehtmlInOptionContainer() {
     const elem = document.querySelectorAll(".table-body")[0];
-
     const newHtml = rerenderBelowHeader();
-
     elem.innerHTML = newHtml;
   }
   const debouncedRerender = debounce(replacehtmlInOptionContainer, 300);
 
   function onSearch(e) {
     const searchValue = e.target.value;
-
     searchValueOutside = searchValue;
     dataAfterSearchApplied = dataPrivateUrls.filter((elem) => {
       if (!searchValue.trim()) {
         return true;
       }
-
       return elem.url.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1;
     });
-
-    // console.log("onSearch -> dataAfterSearchApplied", dataAfterSearchApplied);
-
     debouncedRerender();
   }
 
