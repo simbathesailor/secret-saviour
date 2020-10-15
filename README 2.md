@@ -153,3 +153,13 @@ https://www.youtube.com/watch?v=YQnRSa8MGwM
 ]
 
 "devtools_page": "devtools/devtools.html",
+
+<!--
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "contextMenus",
+    "notifications",
+    "declarativeContent"
+  ], -->

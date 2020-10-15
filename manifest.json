@@ -25,14 +25,7 @@
     "scripts": ["background.js"],
     "persistent": false
   },
-  "permissions": [
-    "tabs",
-    "activeTab",
-    "storage",
-    "contextMenus",
-    "notifications",
-    "declarativeContent"
-  ],
+  "permissions": ["tabs", "activeTab", "storage", "declarativeContent"],
   "icons": {
     "16": "images/favicon-16x16.ico",
     "32": "images/favicon-32x32.ico",
