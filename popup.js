@@ -521,7 +521,6 @@ function onClickHideAllPrivate() {
         const tabsToTakenActionOn = tabsOpenCurrently.filter((tabInfo) => {
           const { url } = tabInfo;
           const parseURLObj = new URL(url);
-
           const { hasMatched: isInPrivateTabList } = isAlreadyThere(
             {
               url,
@@ -532,34 +531,11 @@ function onClickHideAllPrivate() {
           data.listOfPrivateTabs.indexOf(url) !== -1;
 
           if (isInPrivateTabList) {
-            // countOfPrivateTabsHidden++;
             return true;
           }
           return false;
         });
-
-        // countOfPrivateTabsHidden
-        // console.log(
-        //   "onClickHideAllPrivate -> countOfPrivateTabsHidden",
-        //   countOfPrivateTabsHidden
-        // );
-
-        // chrome.storage.sync.set({
-        //   countOfPrivateTabsHidden,
-        // });
-        // console.log("count ==>", countOfPrivateTabsHidden, tabsToTakenActionOn);
         tabsToTakenActionOn.forEach((individualTab, index) => {
-          // console.log(`suspending for ${individualTab.url}`);
-          // individualTab.favIconUrl  =
-          let idTab = individualTab.id;
-          // const isIncognito = individualTab.incognito;
-
-          // if (isIncognito) {
-          //   console.log("onClickHideAllPrivate -> isIncognito", isIncognito);
-          //   chrome.tabs.sendMessage(idTab, {
-          //     type: "changetosuspendedpage",
-          //   });
-          // } else {
           chrome.tabs.update(
             individualTab.id,
             {
@@ -568,16 +544,6 @@ function onClickHideAllPrivate() {
               ),
             },
             (tabDone) => {
-              // sending the tan to change the favicon
-              // console.log(tabDone);
-              // const idTab = individualTab.id
-              // chrome.tabs.connect
-
-              // chrome.tabs.sendMessage(tabDone.id, {
-              //   type: "change_favicon",
-              //   url: tabDone.favIconUrl,
-              // });
-              // tabDone.favIconUrl = individualTab.favIconUrl;
               if (index === tabsToTakenActionOn.length - 1) {
                 updateSecuredTabsCount();
                 updatePrivateButNotSecuredCount();

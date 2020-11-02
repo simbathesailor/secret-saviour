@@ -1,7 +1,6 @@
 // let limit =
 document.addEventListener("DOMContentLoaded", function () {
   let darkMode = false;
-
   let COLOR = [
     {
       background: "#cde9a5",
@@ -56,8 +55,6 @@ document.addEventListener("DOMContentLoaded", function () {
     window.matchMedia &&
     window.matchMedia("(prefers-color-scheme: dark)").matches
   ) {
-    // dark mode
-    // console.log("dark mode is on");
     darkMode = true;
   }
 
@@ -66,7 +63,6 @@ document.addEventListener("DOMContentLoaded", function () {
   var searchParams = new URLSearchParams(location.search);
 
   //Iterate the search parameters.
-
   let searchParamObj = {};
   for (let p of searchParams) {
     // console.log(p);
@@ -86,11 +82,3 @@ document.addEventListener("DOMContentLoaded", function () {
   pageURLElem.innerHTML =
     searchParamObj.url || "Looks like we dont have anywhere to go";
 });
-
-// if it is a CONTWENT SCRIPT, then it can message from background.js
-
-// chrome.runtime.onMessage.addListener(gotMessage)
-
-// function gotMessage(message, sender, sendResponse) {
-//  //
-// }

@@ -128,24 +128,23 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="section-title">Manage Preferences</div>
   <div id="private-tabs">
     <div class="option-header">
-      <p>All Private Tabs</p>      
+      <p>Add Private Tab</p>      
+      <div class="add-url-radio-layer">
+        <input type="radio" id="domain" name="type-url" value="domain"  checked="true">
+        <label for="domain">Domain</label>
+        <input type="radio" id="exact" name="type-url" value="exact">
+        <label for="exact">Exact</label>
+      </div>
     </div>
     <div class="add-url-layer-container">
         <div class="add-url-layer">
-          <input type="text" id="add-url-input" placeholder="Add New URL"/>
+          <input type="text" id="add-url-input" placeholder="Eg: https://www.abc.xyz"/>
           <button id="add-new-btn">Add New URL</button>
-        </div>
-        <div class="add-url-radio-layer">
-          <input type="radio" id="domain" name="type-url" value="domain"  checked="true">
-          <label for="domain">Domain</label>
-          <input type="radio" id="exact" name="type-url" value="exact">
-          <label for="exact">Exact</label>
         </div>
     </div>
     <div class="option-detail-section">
       <ul class="options-list">
       <li class="option-row header">
-      <span></span>
         <span class="search-url-header">
           URL
             <span>
@@ -273,7 +272,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function CrossHandler(e) {
     const dataKey = e.currentTarget.dataset.key;
+    console.log(dataKey);
     dataPrivateUrls.forEach((elem, index) => {
+      console.log("Here ==>", elem, getKeys(elem));
       if (getKeys(elem) === dataKey) {
         dataPrivateUrls.splice(index, 1);
         chrome.storage.sync.set(
@@ -302,12 +303,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (isValid) {
       const isDomainSelected = document.getElementById("domain").checked;
       const isExactSelected = document.getElementById("exact").checked;
-
-      // if(isDomainSelected) {
-
-      // }
-
-      // if()
       const isAlreadyThere =
         dataPrivateUrls.filter((elem) => {
           if (isExactSelected) {
@@ -338,11 +333,11 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         );
       } else {
-        // show some error
+        console.error("Something went wrong!");
       }
     }
-    // console.log("onClickAddnewUrlBtn -> isValid", isValid);
   }
+
   function paintUI() {
     // chrome.windows.getAll({ populate: true }, function (windows) {
     //   let tabsOpenCurrently = [];
@@ -363,7 +358,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .indexOf(searchValueOutside.toLowerCase() || "") !== -1
         );
       });
-
       rerenderUI();
     });
   }

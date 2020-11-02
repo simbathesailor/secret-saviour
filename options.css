@@ -86,6 +86,7 @@ svg:root {
   justify-content: space-between;
   height: 48px;
   font-size: 0.8125rem;
+  padding: 0px 25px;
 }
 .option-header p {
   font-size: 1rem;
@@ -102,6 +103,9 @@ svg:root {
 .option-row .header span {
   padding: auto 4px;
 }
+.option-row.header {
+  grid-template-columns: 45% 15% 15% 25%;
+}
 .option-row span:first-child {
   margin-right: 8px;
 }
@@ -117,10 +121,6 @@ svg:root {
 }
 .options-list .option-row:last-child {
   border-bottom-width: 0px;
-}
-
-.option-header {
-  padding: 0px 25px;
 }
 .arrow-icon {
   height: 12px;
@@ -178,7 +178,7 @@ svg:root {
 
 .add-url-radio-layer {
   padding-left: 20px;
-  margin-top: 15px;
+  margin-right: 165px;
   display: flex;
   align-items: center;
 }
